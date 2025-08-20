@@ -10,7 +10,8 @@ info:
 servers:
   - url: http://localhost:3000/v1
     description: Development server (v1.x)
-
+  - url: http://localhost:3000/v2
+    description: Development server (v2.x)
 security:
   - BearerAuth: []
 
@@ -22,7 +23,7 @@ tags:
 
 
 paths:
-  /v1/students:
+  /students:
     get:
       summary: Get all students
       description: Retrieve a paginated list of all students
@@ -58,7 +59,7 @@ paths:
                   page: 1
                   limit: 10
                   total: 150
-                  totalPages: 15
+                  total_pages: 15
         '400':
           $ref: '#/components/responses/BadRequest'
         '500':
@@ -109,7 +110,7 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
 
-  /v1/students/{studentId}:
+  /students/{student_id}:
     get:
       summary: Get student by ID
       description: Retrieve a specific student by their ID
@@ -190,7 +191,7 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
 
-  /v1/students/{studentId}/move:
+  /students/{student_id}/move:
     patch:
       summary: Move student to another room
       description: Transfer a student from their current room to a different room
@@ -205,7 +206,7 @@ paths:
             schema:
               $ref: '#/components/schemas/MoveStudentRequest'
             example:
-              roomId: 205
+              room_id: 205
       responses:
         '200':
           description: Student moved successfully
@@ -228,7 +229,7 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
 
-  /v1/rooms:
+  /rooms:
     get:
       summary: Get all rooms
       description: Retrieve a paginated list of all rooms
@@ -255,7 +256,7 @@ paths:
                   page: 1
                   limit: 10
                   total: 50
-                  totalPages: 5
+                  total_pages: 5
         '400':
           $ref: '#/components/responses/BadRequest'
         '500':
@@ -291,7 +292,7 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
 
-  /v1/rooms/{roomId}:
+  /rooms/{room_id}:
     get:
       summary: Get room by ID
       description: Retrieve a specific room by its ID
@@ -365,7 +366,7 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
 
-  /v1/rooms/{roomId}/students:
+  /rooms/{room_id}/students:
     get:
       summary: Get all students in a specific room
       description: Retrieve a paginated list of students assigned to a specific room
@@ -399,7 +400,7 @@ paths:
                   page: 1
                   limit: 10
                   total: 25
-                  totalPages: 3
+                  total_pages: 3
         '400':
           $ref: '#/components/responses/BadRequest'
         '404':
@@ -441,7 +442,7 @@ components:
     
   parameters:
     StudentIdParam:
-      name: studentId
+      name: student_id
       in: path
       required: true
       description: Unique identifier for a student
@@ -451,7 +452,7 @@ components:
         example: 1
 
     RoomIdParam:
-      name: roomId
+      name: room_id
       in: path
       required: true
       description: Unique identifier for a room
@@ -681,7 +682,7 @@ components:
         - page
         - limit
         - total
-        - totalPages
+        - total_pages
       properties:
         page:
           type: integer
@@ -698,7 +699,7 @@ components:
           minimum: 0
           description: Total number of items
           example: 150
-        totalPages:
+        total_pages:
           type: integer
           minimum: 0
           description: Total number of pages
